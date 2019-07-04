@@ -11,11 +11,12 @@ public class KartRaceMain
     {
         try
         {
-
+            String filePath = args[0];
+            ProcessRaceInfoService.processRaceResults(filePath);
         }
         catch(Exception e)
         {
-            String filePath = args[0];
+
         }
     }
 }
