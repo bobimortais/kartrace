@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class to read the input file from the file system
+ */
 public class FileProcessor
 {
     public static List<String> getLinesFromFile(String filePath)

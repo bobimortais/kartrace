@@ -2,6 +2,9 @@ package com.test.kartrace.entity;
 
 import java.util.Date;
 
+/**
+ * Class to represent the race results for each driver
+ */
 public class DriverInfo
 {
     private long driverId;

@@ -3,6 +3,10 @@ package com.test.kartrace.entity;
 import java.time.LocalTime;
 import java.util.Date;
 
+/**
+ * Class which represents each line of the input file,
+ * which will have info about each lap
+ */
 public class LapInfo
 {
     private LocalTime lapTimeStamp;
