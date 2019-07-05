@@ -1,10 +1,11 @@
 package com.test.kartrace.entity;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 public class LapInfo
 {
-    private Date lapTimeStamp;
+    private LocalTime lapTimeStamp;
 
     private long driverId;
 
@@ -16,12 +17,12 @@ public class LapInfo
 
     private double avgLapSpeed;
 
-    public Date getLapTimeStamp()
+    public LocalTime getLapTimeStamp()
     {
         return lapTimeStamp;
     }
 
-    public void setLapTimeStamp(Date lapTimeStamp)
+    public void setLapTimeStamp(LocalTime lapTimeStamp)
     {
         this.lapTimeStamp = lapTimeStamp;
     }

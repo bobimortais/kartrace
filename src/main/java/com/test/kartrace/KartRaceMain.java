@@ -16,7 +16,7 @@ public class KartRaceMain
         }
         catch(Exception e)
         {
-
+            e.printStackTrace();
         }
     }
 }

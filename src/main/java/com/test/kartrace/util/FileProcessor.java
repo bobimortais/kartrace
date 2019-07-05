@@ -26,7 +26,6 @@ public class FileProcessor
         {
             e.printStackTrace();
         }
-        System.out.println(fileLines);
         return fileLines;
     }
 }
