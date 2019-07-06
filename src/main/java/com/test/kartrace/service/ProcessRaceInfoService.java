@@ -22,6 +22,12 @@ public class ProcessRaceInfoService
         showRaceResults(driversResults);
     }
 
+    /**
+     * Method to convert the lines from the input file into LapInfo object
+     * @param fileLines
+     * @return List<LapInfo>
+     * @throws Exception
+     */
     private static List<LapInfo> convertLinesToLapInfo(List<String> fileLines) throws Exception
     {
         List<LapInfo> lapInfoList = new ArrayList<>();
@@ -47,6 +53,11 @@ public class ProcessRaceInfoService
         return lapInfoList;
     }
 
+    /**
+     * Method to calculate drivers results based on the laps info
+     * @param lapInfoList
+     * @return List<DriverInfo>
+     */
     private static List<DriverInfo> getDriversResults(List<LapInfo> lapInfoList)
     {
         List<DriverInfo> driverInfoList = new ArrayList<DriverInfo>();
@@ -55,25 +66,45 @@ public class ProcessRaceInfoService
 
         for(LapInfo lapInfo : lapInfoList)
         {
-            if(driverInfoList.stream().anyMatch(li -> li.getDriverId() == lapInfo.getDriverId()))
-            {
-
-            }
-            else
-            {
-                DriverInfo driverInfo = new DriverInfo();
-                driverInfo.setDriverId(lapInfo.getDriverId());
-                driverInfo.setDriverName(lapInfo.getDriverName());
-                driverInfo.setCompletedLaps(1);
-                driverInfo.setDriverPosition(position);
-                driverInfoList.add(driverInfo);
-                position++;
-            }
+           if (driverInfoList.stream().anyMatch(li -> li.getDriverId() == lapInfo.getDriverId()))
+           {
+               for(DriverInfo driverInfo : driverInfoList)
+               {
+                   if(driverInfo.getDriverId() == lapInfo.getDriverId())
+                   {
+                       driverInfo.setCompletedLaps(driverInfo.getCompletedLaps() + 1);
+                       //driverInfo.setTotalRaceTime();
+                       //driverInfo.setBestLap(lapInfo.getLapTime());
+                       driverInfo.setAvgSpeed((driverInfo.getAvgSpeed() + lapInfo.getAvgLapSpeed()));
+                       //driverInfo.setGapToLeader();
+                       driverInfo.setRaceBestLap(false);
+                   }
+               }
+           }
+           else
+           {
+               DriverInfo driverInfo = new DriverInfo();
+               driverInfo.setDriverId(lapInfo.getDriverId());
+               driverInfo.setDriverName(lapInfo.getDriverName());
+               driverInfo.setCompletedLaps(1);
+               driverInfo.setDriverPosition(position);
+               driverInfo.setTotalRaceTime(lapInfo.getLapTime());
+               //driverInfo.setBestLap(lapInfo.getLapTime());
+               driverInfo.setAvgSpeed(lapInfo.getAvgLapSpeed());
+               //driverInfo.setGapToLeader();
+               driverInfo.setRaceBestLap(false);
+               driverInfoList.add(driverInfo);
+               position++;
+           }
         }
 
         return driverInfoList;
     }
 
+    /**
+     * Method to show the race results
+     * @param driversResults - List with the results for each driver
+     */
     private static void showRaceResults(List<DriverInfo> driversResults)
     {
         String leftAlignFormat = "| %-7s | %-6s | %-14s | %-6s | %-12s | %-23s | %-16s | %-16s | %-11s |%n";
@@ -84,7 +115,17 @@ public class ProcessRaceInfoService
 
         for(DriverInfo driver : driversResults)
         {
-            System.out.format(leftAlignFormat, driver.getDriverPosition(), driver.getDriverId(),driver.getDriverName(),driver.getCompletedLaps(),driver.getBestLap(),0,0,0,0);
+            System.out.format(leftAlignFormat,
+                            driver.getDriverPosition(),
+                            driver.getDriverId(),
+                            driver.getDriverName(),
+                            driver.getCompletedLaps(),
+                            driver.getBestLap(),
+                            "x",
+                            driver.getAvgSpeed() / driver.getCompletedLaps(),
+                            0,
+                            0);
         }
+        System.out.format("+---------+--------+----------------+--------+--------------+-------------------------+------------------+------------------+-------------+%n");
     }
 }
