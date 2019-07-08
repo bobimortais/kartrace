@@ -61,6 +61,9 @@ public class ProcessRaceInfoService
     {
         List<DriverInfo> driverInfoList = new ArrayList<DriverInfo>();
         lapInfoList.sort(Comparator.comparing(LapInfo::getLapNumber).reversed().thenComparing(LapInfo::getLapTimeStamp));
+        Optional<LapInfo> bestLapOptional = lapInfoList.stream().sorted(Comparator.comparing(LapInfo::getLapTime)).findFirst();
+        LapInfo bestLap = bestLapOptional.get();
+
         int position = 1;
         LapInfo leaderLastLap = lapInfoList.get(0);
 
@@ -80,7 +83,9 @@ public class ProcessRaceInfoService
                        driverInfo.setAvgSpeed((driverInfo.getAvgSpeed() + lapInfo.getAvgLapSpeed()));
                        Date totalRaceTime = new Date(driverInfo.getTotalRaceTime().getTime() + lapInfo.getLapTime().getTime());
                        driverInfo.setTotalRaceTime(totalRaceTime);
-                       driverInfo.setRaceBestLap(false);
+
+                       if(lapInfo.getLapTime().getTime() == bestLap.getLapTime().getTime())
+                           driverInfo.setRaceBestLap(true);
                    }
                }
            }
@@ -95,7 +100,10 @@ public class ProcessRaceInfoService
                driverInfo.setBestLap(lapInfo.getLapTime());
                driverInfo.setAvgSpeed(lapInfo.getAvgLapSpeed());
                driverInfo.setGapToLeader(new Date(lapInfo.getLapTimeStamp().getTime() - leaderLastLap.getLapTimeStamp().getTime()));
-               driverInfo.setRaceBestLap(false);
+
+               if(lapInfo.getLapTime().getTime() == bestLap.getLapTime().getTime())
+                   driverInfo.setRaceBestLap(true);
+
                driverInfoList.add(driverInfo);
                position++;
            }
@@ -124,12 +132,12 @@ public class ProcessRaceInfoService
                             driver.getDriverId(),
                             driver.getDriverName(),
                             driver.getCompletedLaps(),
-                            dateFormat.format(driver.getBestLap()),
+                            driver.isRaceBestLap() ? dateFormat.format(driver.getBestLap()) + "*" : dateFormat.format(driver.getBestLap()),
                             String.format("%.3f", driver.getAvgSpeed() / driver.getCompletedLaps()),
                             dateFormat.format(driver.getGapToLeader()),
                             dateFormat.format(driver.getTotalRaceTime()));
         }
-        System.out.format("+---------+--------+----------------+--------+--------------+------------------+------------------+------------+%n");
+        System.out.format("+---------+--------+----------------+--------+--------------+------------------+------------------+-------------+%n");
         System.out.println("*Melhor volta da corrida");
     }
 }
