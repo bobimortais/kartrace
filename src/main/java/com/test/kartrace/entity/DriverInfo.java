@@ -17,13 +17,13 @@ public class DriverInfo
 
     private Date totalRaceTime;
 
-    private int bestLap;
+    private Date bestLap;
 
     private boolean raceBestLap;
 
     private double avgSpeed;
 
-    private double gapToLeader;
+    private Date gapToLeader;
 
     public long getDriverId()
     {
@@ -75,12 +75,12 @@ public class DriverInfo
         this.totalRaceTime = totalRaceTime;
     }
 
-    public int getBestLap()
+    public Date getBestLap()
     {
         return bestLap;
     }
 
-    public void setBestLap(int bestLap)
+    public void setBestLap(Date bestLap)
     {
         this.bestLap = bestLap;
     }
@@ -105,12 +105,12 @@ public class DriverInfo
         this.avgSpeed = avgSpeed;
     }
 
-    public double getGapToLeader()
+    public Date getGapToLeader()
     {
         return gapToLeader;
     }
 
-    public void setGapToLeader(double gapToLeader)
+    public void setGapToLeader(Date gapToLeader)
     {
         this.gapToLeader = gapToLeader;
     }

@@ -6,7 +6,6 @@ import com.test.kartrace.util.FileProcessor;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -31,7 +30,8 @@ public class ProcessRaceInfoService
     private static List<LapInfo> convertLinesToLapInfo(List<String> fileLines) throws Exception
     {
         List<LapInfo> lapInfoList = new ArrayList<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("m:ss.SSS");
+        SimpleDateFormat lapTimeDateFormat = new SimpleDateFormat("mm:ss.SSS");
+        SimpleDateFormat lapTimeStampDateFormat = new SimpleDateFormat("hh:mm:ss.SSS");
         NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
         fileLines.remove(0);
 
@@ -40,12 +40,11 @@ public class ProcessRaceInfoService
             line = line.trim().replaceAll("\\s+", " ");
             String[] values = line.split(" ");
             LapInfo lapInfo = new LapInfo();
-            lapInfo.setLapTimeStamp(LocalTime.parse(values[0]));
+            lapInfo.setLapTimeStamp(new Timestamp(lapTimeStampDateFormat.parse(values[0]).getTime()));
             lapInfo.setDriverId(Integer.parseInt(values[1]));
             lapInfo.setDriverName(values[3]);
             lapInfo.setLapNumber(Integer.parseInt(values[4]));
-            dateFormat.parse(values[5]).getTime();
-            lapInfo.setLapTime(new Timestamp(dateFormat.parse(values[5]).getTime()));
+            lapInfo.setLapTime(new Timestamp(lapTimeDateFormat.parse(values[5]).getTime()));
             lapInfo.setAvgLapSpeed(format.parse(values[6]).doubleValue());
             lapInfoList.add(lapInfo);
         }
@@ -63,6 +62,7 @@ public class ProcessRaceInfoService
         List<DriverInfo> driverInfoList = new ArrayList<DriverInfo>();
         lapInfoList.sort(Comparator.comparing(LapInfo::getLapNumber).reversed().thenComparing(LapInfo::getLapTimeStamp));
         int position = 1;
+        LapInfo leaderLastLap = lapInfoList.get(0);
 
         for(LapInfo lapInfo : lapInfoList)
         {
@@ -73,10 +73,13 @@ public class ProcessRaceInfoService
                    if(driverInfo.getDriverId() == lapInfo.getDriverId())
                    {
                        driverInfo.setCompletedLaps(driverInfo.getCompletedLaps() + 1);
-                       //driverInfo.setTotalRaceTime();
-                       //driverInfo.setBestLap(lapInfo.getLapTime());
+
+                       if(lapInfo.getLapTime().getTime() < driverInfo.getBestLap().getTime())
+                            driverInfo.setBestLap(lapInfo.getLapTime());
+
                        driverInfo.setAvgSpeed((driverInfo.getAvgSpeed() + lapInfo.getAvgLapSpeed()));
-                       //driverInfo.setGapToLeader();
+                       Date totalRaceTime = new Date(driverInfo.getTotalRaceTime().getTime() + lapInfo.getLapTime().getTime());
+                       driverInfo.setTotalRaceTime(totalRaceTime);
                        driverInfo.setRaceBestLap(false);
                    }
                }
@@ -89,9 +92,9 @@ public class ProcessRaceInfoService
                driverInfo.setCompletedLaps(1);
                driverInfo.setDriverPosition(position);
                driverInfo.setTotalRaceTime(lapInfo.getLapTime());
-               //driverInfo.setBestLap(lapInfo.getLapTime());
+               driverInfo.setBestLap(lapInfo.getLapTime());
                driverInfo.setAvgSpeed(lapInfo.getAvgLapSpeed());
-               //driverInfo.setGapToLeader();
+               driverInfo.setGapToLeader(new Date(lapInfo.getLapTimeStamp().getTime() - leaderLastLap.getLapTimeStamp().getTime()));
                driverInfo.setRaceBestLap(false);
                driverInfoList.add(driverInfo);
                position++;
@@ -107,11 +110,12 @@ public class ProcessRaceInfoService
      */
     private static void showRaceResults(List<DriverInfo> driversResults)
     {
-        String leftAlignFormat = "| %-7s | %-6s | %-14s | %-6s | %-12s | %-23s | %-16s | %-16s | %-11s |%n";
+        String leftAlignFormat = "| %-7s | %-6s | %-14s | %-6s | %-12s | %-16s | %-16s | %-11s |%n";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SSS");
 
-        System.out.format("+---------+--------+----------------+--------+--------------+-------------------------+------------------+------------------+-------------+%n");
-        System.out.format("| Posicao | Codigo | Piloto         | Voltas | Melhor Volta | Melhor Volta da Corrida | Velocidade Media | Tempo para lider | Tempo Total |%n");
-        System.out.format("+---------+--------+----------------+--------+--------------+-------------------------+------------------+------------------+-------------+%n");
+        System.out.format("+---------+--------+----------------+--------+--------------+------------------+------------------+-------------+%n");
+        System.out.format("| Posicao | Codigo | Piloto         | Voltas | Melhor Volta | Velocidade Media | Tempo para lider | Tempo Total |%n");
+        System.out.format("+---------+--------+----------------+--------+--------------+------------------+------------------+-------------+%n");
 
         for(DriverInfo driver : driversResults)
         {
@@ -120,12 +124,12 @@ public class ProcessRaceInfoService
                             driver.getDriverId(),
                             driver.getDriverName(),
                             driver.getCompletedLaps(),
-                            driver.getBestLap(),
-                            "x",
-                            driver.getAvgSpeed() / driver.getCompletedLaps(),
-                            0,
-                            0);
+                            dateFormat.format(driver.getBestLap()),
+                            String.format("%.3f", driver.getAvgSpeed() / driver.getCompletedLaps()),
+                            dateFormat.format(driver.getGapToLeader()),
+                            dateFormat.format(driver.getTotalRaceTime()));
         }
-        System.out.format("+---------+--------+----------------+--------+--------------+-------------------------+------------------+------------------+-------------+%n");
+        System.out.format("+---------+--------+----------------+--------+--------------+------------------+------------------+------------+%n");
+        System.out.println("*Melhor volta da corrida");
     }
 }
