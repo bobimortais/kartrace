@@ -13,9 +13,8 @@ import java.util.*;
  */
 public class ProcessRaceInfoService
 {
-    public static void processRaceResults(String filePath) throws Exception
+    public static void processRaceResults(List<String> fileLines) throws Exception
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile(filePath);
         List<LapInfo> lapInfoList = convertLinesToLapInfo(fileLines);
         List<DriverInfo> driversResults = getDriversResults(lapInfoList);
         showRaceResults(driversResults);
