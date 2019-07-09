@@ -2,7 +2,6 @@ package com.test.kartrace.service;
 
 import com.test.kartrace.entity.DriverInfo;
 import com.test.kartrace.entity.LapInfo;
-import com.test.kartrace.util.FileProcessor;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -62,52 +61,43 @@ public class ProcessRaceInfoService
         lapInfoList.sort(Comparator.comparing(LapInfo::getLapNumber).reversed().thenComparing(LapInfo::getLapTimeStamp));
         Optional<LapInfo> bestLapOptional = lapInfoList.stream().sorted(Comparator.comparing(LapInfo::getLapTime)).findFirst();
         LapInfo bestLap = bestLapOptional.get();
-
-        int position = 1;
+        LinkedHashMap<Long, List<LapInfo>> mapLapsByDriver = new LinkedHashMap<>();
         LapInfo leaderLastLap = lapInfoList.get(0);
 
-        for(LapInfo lapInfo : lapInfoList)
+        for(LapInfo lap : lapInfoList)
         {
-           if (driverInfoList.stream().anyMatch(li -> li.getDriverId() == lapInfo.getDriverId()))
-           {
-               for(DriverInfo driverInfo : driverInfoList)
-               {
-                   if(driverInfo.getDriverId() == lapInfo.getDriverId())
-                   {
-                       driverInfo.setCompletedLaps(driverInfo.getCompletedLaps() + 1);
-
-                       if(lapInfo.getLapTime().getTime() < driverInfo.getBestLap().getTime())
-                            driverInfo.setBestLap(lapInfo.getLapTime());
-
-                       driverInfo.setAvgSpeed((driverInfo.getAvgSpeed() + lapInfo.getAvgLapSpeed()));
-                       Date totalRaceTime = new Date(driverInfo.getTotalRaceTime().getTime() + lapInfo.getLapTime().getTime());
-                       driverInfo.setTotalRaceTime(totalRaceTime);
-
-                       if(lapInfo.getLapTime().getTime() == bestLap.getLapTime().getTime())
-                           driverInfo.setRaceBestLap(true);
-                   }
-               }
-           }
-           else
-           {
-               DriverInfo driverInfo = new DriverInfo();
-               driverInfo.setDriverId(lapInfo.getDriverId());
-               driverInfo.setDriverName(lapInfo.getDriverName());
-               driverInfo.setCompletedLaps(1);
-               driverInfo.setDriverPosition(position);
-               driverInfo.setTotalRaceTime(lapInfo.getLapTime());
-               driverInfo.setBestLap(lapInfo.getLapTime());
-               driverInfo.setAvgSpeed(lapInfo.getAvgLapSpeed());
-               driverInfo.setGapToLeader(new Date(lapInfo.getLapTimeStamp().getTime() - leaderLastLap.getLapTimeStamp().getTime()));
-
-               if(lapInfo.getLapTime().getTime() == bestLap.getLapTime().getTime())
-                   driverInfo.setRaceBestLap(true);
-
-               driverInfoList.add(driverInfo);
-               position++;
-           }
+            mapLapsByDriver.computeIfAbsent(lap.getDriverId(), ll -> new ArrayList<LapInfo>());
+            mapLapsByDriver.get(lap.getDriverId()).add(lap);
         }
 
+        int position = 0;
+        for(Iterator it = mapLapsByDriver.keySet().iterator(); it.hasNext();)
+        {
+            Long driverId = (Long) it.next();
+            List<LapInfo> laps = mapLapsByDriver.get(driverId);
+            DriverInfo driverInfo = new DriverInfo();
+            driverInfo.setDriverId(driverId);
+            driverInfo.setDriverName(laps.get(0).getDriverName());
+            driverInfo.setBestLap(laps.get(0).getLapTime());
+            driverInfo.setTotalRaceTime(new Date(0));
+            driverInfo.setDriverPosition(position++);
+            driverInfo.setGapToLeader(new Date(laps.get(0).getLapTimeStamp().getTime() - leaderLastLap.getLapTimeStamp().getTime()));
+
+            for(LapInfo lap : laps)
+            {
+                driverInfo.setCompletedLaps(driverInfo.getCompletedLaps() + 1);
+                if(lap.getLapTime().getTime() < driverInfo.getBestLap().getTime())
+                    driverInfo.setBestLap(lap.getLapTime());
+
+                driverInfo.setAvgSpeed((driverInfo.getAvgSpeed() + lap.getAvgLapSpeed()));
+                Date totalRaceTime = new Date(driverInfo.getTotalRaceTime().getTime() + lap.getLapTime().getTime());
+                driverInfo.setTotalRaceTime(totalRaceTime);
+
+                if(lap.getLapTime().getTime() == bestLap.getLapTime().getTime())
+                    driverInfo.setRaceBestLap(true);
+            }
+            driverInfoList.add(driverInfo);
+        }
         return driverInfoList;
     }
 
