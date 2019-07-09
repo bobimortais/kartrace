@@ -1,5 +1,7 @@
 package com.test.kartrace;
 
+import com.test.kartrace.display.DisplayRaceResults;
+import com.test.kartrace.entity.DriverInfo;
 import com.test.kartrace.service.ProcessRaceInfoService;
 import com.test.kartrace.util.FileProcessor;
 
@@ -16,7 +18,8 @@ public class KartRaceMain
             /**Call the ProcessRaceInfoService to process the file and show the
             race result*/
             List<String> fileLines = FileProcessor.getLinesFromFile(filePath);
-            ProcessRaceInfoService.processRaceResults(fileLines);
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            DisplayRaceResults.showRaceResults(driversInfo);
         }
         catch(Exception e)
         {
