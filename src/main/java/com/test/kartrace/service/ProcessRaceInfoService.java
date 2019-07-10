@@ -2,6 +2,7 @@ package com.test.kartrace.service;
 
 import com.test.kartrace.entity.DriverInfo;
 import com.test.kartrace.entity.LapInfo;
+import org.apache.log4j.Logger;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -12,11 +13,18 @@ import java.util.*;
  */
 public class ProcessRaceInfoService
 {
+    private ProcessRaceInfoService()
+    {
+
+    }
+
+    private static final Logger logger = Logger.getLogger(ProcessRaceInfoService.class);
+
     public static List<DriverInfo> processRaceResults(List<String> fileLines) throws Exception
     {
         List<LapInfo> lapInfoList = convertLinesToLapInfo(fileLines);
-        List<DriverInfo> driversResults = getDriversResults(lapInfoList);
-        return driversResults;
+        getDriversResults(lapInfoList);
+        return getDriversResults(lapInfoList);
     }
 
     /**
@@ -56,7 +64,7 @@ public class ProcessRaceInfoService
      */
     private static List<DriverInfo> getDriversResults(List<LapInfo> lapInfoList)
     {
-        List<DriverInfo> driverInfoList = new ArrayList<DriverInfo>();
+        List<DriverInfo> driverInfoList = new ArrayList<>();
         /**Ordering the list of laps by the lap number on descending order and but the lap timestamp to
          * to get the correct finishing order
          */
@@ -64,9 +72,10 @@ public class ProcessRaceInfoService
         //Getting the best lap of the race by ordering the list of laps by the lap time on ascending order
         Optional<LapInfo> bestLapOptional = lapInfoList.stream().sorted(Comparator.comparing(LapInfo::getLapTime)).findFirst();
         LapInfo bestLap = bestLapOptional.get();
-        LinkedHashMap<Long, List<LapInfo>> mapLapsByDriver = new LinkedHashMap<>();
         LapInfo leaderLastLap = lapInfoList.get(0);
 
+        //Creating a Map to group the laps by driver ID
+        LinkedHashMap<Long, List<LapInfo>> mapLapsByDriver = new LinkedHashMap<>();
         for(LapInfo lap : lapInfoList)
         {
             mapLapsByDriver.computeIfAbsent(lap.getDriverId(), ll -> new ArrayList<LapInfo>());

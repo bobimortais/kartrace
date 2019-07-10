@@ -1,5 +1,7 @@
 package com.test.kartrace.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,6 +16,13 @@ import java.util.stream.Collectors;
  */
 public class FileProcessor
 {
+    private static final Logger logger = Logger.getLogger(FileProcessor.class);
+
+    private FileProcessor()
+    {
+
+    }
+
     public static List<String> getLinesFromFile(String filePath)
     {
         List<String> fileLines = new ArrayList<>();
@@ -21,13 +30,13 @@ public class FileProcessor
         {
             fileLines = br.lines().collect(Collectors.toList());
         }
-        catch (FileNotFoundException e1)
+        catch (FileNotFoundException e)
         {
-            e1.printStackTrace();
+            logger.error("", e);
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return fileLines;
     }

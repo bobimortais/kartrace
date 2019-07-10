@@ -4,11 +4,14 @@ import com.test.kartrace.display.DisplayRaceResults;
 import com.test.kartrace.entity.DriverInfo;
 import com.test.kartrace.service.ProcessRaceInfoService;
 import com.test.kartrace.util.FileProcessor;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 public class KartRaceMain
 {
+    private static final Logger logger = Logger.getLogger(KartRaceMain.class);
+
     public static void main(String[] args)
     {
         try
@@ -23,7 +26,7 @@ public class KartRaceMain
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 }
