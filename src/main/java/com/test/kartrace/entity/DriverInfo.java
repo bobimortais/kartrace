@@ -114,4 +114,22 @@ public class DriverInfo
     {
         this.gapToLeader = gapToLeader;
     }
+
+    public void addRaceTime(Date timeToAdd)
+    {
+        totalRaceTime = new Date(totalRaceTime.getTime() + timeToAdd.getTime());
+    }
+
+    public void incrementCompletedLaps()
+    {
+        completedLaps++;
+    }
+
+    public DriverInfo(Long driverId, String driverName)
+    {
+        this.driverId = driverId;
+        this.driverName = driverName;
+        totalRaceTime = new Date(0);
+        bestLap = new Date(Long.MAX_VALUE);
+    }
 }

@@ -87,24 +87,19 @@ public class ProcessRaceInfoService
         {
             Long driverId = (Long) it.next();
             List<LapInfo> laps = mapLapsByDriver.get(driverId);
-            DriverInfo driverInfo = new DriverInfo();
-            driverInfo.setDriverId(driverId);
-            driverInfo.setDriverName(laps.get(0).getDriverName());
-            driverInfo.setBestLap(laps.get(0).getLapTime());
-            driverInfo.setTotalRaceTime(new Date(0));
+            DriverInfo driverInfo = new DriverInfo(driverId, laps.get(0).getDriverName());
             driverInfo.setDriverPosition(position++);
             driverInfo.setGapToLeader(new Date(laps.get(0).getLapTimeStamp().getTime() - leaderLastLap.getLapTimeStamp().getTime()));
 
             for(LapInfo lap : laps)
             {
-                driverInfo.setCompletedLaps(driverInfo.getCompletedLaps() + 1);
+                driverInfo.incrementCompletedLaps();
                 if(lap.getLapTime().getTime() < driverInfo.getBestLap().getTime())
                     driverInfo.setBestLap(lap.getLapTime());
 
                 driverInfo.setAvgSpeed((driverInfo.getAvgSpeed() + lap.getAvgLapSpeed()));
-                Date totalRaceTime = new Date(driverInfo.getTotalRaceTime().getTime() + lap.getLapTime().getTime());
-                driverInfo.setTotalRaceTime(totalRaceTime);
-
+                driverInfo.setTotalRaceTime(lap.getLapTime());
+                //Laps could have the same lap time
                 if(lap.getLapTime().getTime() == bestLap.getLapTime().getTime())
                     driverInfo.setRaceBestLap(true);
             }
