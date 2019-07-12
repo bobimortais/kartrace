@@ -1,3 +1,5 @@
+import com.test.kartrace.entity.DriverInfo;
+import com.test.kartrace.service.ProcessRaceInfoService;
 import com.test.kartrace.util.FileProcessor;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,55 +25,120 @@ public class TestRaceProcessing
     @Test
     public void POSITION_CORRECT()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(true);
+       try
+       {
+           List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+           List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+           Assert.assertTrue(true);
+       }
+       catch(Exception e)
+       {
+           Assert.assertTrue(false);
+       }
     }
 
     @Test
     public void CHECK_COMPLETED_LAPS()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(true);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            Assert.assertTrue(true);
+        }
+        catch(Exception e)
+        {
+            Assert.assertTrue(false);
+        }
     }
 
     @Test
     public void CHECK_TOTAL_RACE_TIME()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(true);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            Assert.assertTrue(true);
+        }
+        catch(Exception e)
+        {
+            Assert.assertTrue(false);
+        }
     }
 
     @Test
     public void CHECK_DRIVER_BEST_LAP()
     {
-        Assert.assertTrue(true);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            Assert.assertTrue(true);
+        }
+        catch(Exception e)
+        {
+            Assert.assertTrue(false);
+        }
     }
 
     @Test
     public void CHECK_RACE_BEST_LAP()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(true);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            Assert.assertTrue(true);
+        }
+        catch(Exception e)
+        {
+            Assert.assertTrue(false);
+        }
     }
 
     @Test
     public void CHECK_GAP_TO_LEADER()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(true);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            Assert.assertTrue(true);
+        }
+        catch(Exception e)
+        {
+            Assert.assertTrue(false);
+        }
     }
 
     @Test
     public void CHECK_DRIVER_RACE_AVG_SPEED()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(true);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            Assert.assertTrue(true);
+        }
+        catch(Exception e)
+        {
+            Assert.assertTrue(false);
+        }
     }
 
     @Test
     public void CHECK_ALL_DATA_SHOWN()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(true);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
+            Assert.assertTrue(true);
+        }
+        catch(Exception e)
+        {
+            Assert.assertTrue(false);
+        }
     }
 }
