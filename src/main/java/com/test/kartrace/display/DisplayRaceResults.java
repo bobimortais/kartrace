@@ -36,11 +36,22 @@ public class DisplayRaceResults
                     driver.getDriverName(),
                     driver.getCompletedLaps(),
                     driver.isRaceBestLap() ? dateFormat.format(driver.getBestLap()) + "*" : dateFormat.format(driver.getBestLap()),
-                    String.format("%.3f", driver.getTotalSpeed() / driver.getCompletedLaps()),
+                    formatAvgSpeed(driver.getTotalSpeed(), driver.getCompletedLaps()),
                     dateFormat.format(driver.getGapToLeader()),
                     dateFormat.format(driver.getTotalRaceTime()));
         }
         System.out.format(SEPARATOR);
         System.out.println("*Melhor volta da corrida");
+    }
+
+    /**
+     * Method to format driver average speed
+     * @param totalSpeed
+     * @param completedLaps
+     * @return String - average speed
+     */
+    public static String formatAvgSpeed(double totalSpeed, int completedLaps)
+    {
+        return String.format("%.3f", totalSpeed / completedLaps);
     }
 }

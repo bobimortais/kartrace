@@ -11,6 +11,7 @@ import java.util.List;
 
 public class TestRaceProcessing
 {
+    private static final SimpleDateFormat lapTimeDateFormat = new SimpleDateFormat("mm:ss.SSS");
     @Test
     public void TEST_FILE_LOAD_SUCESS()
     {
@@ -74,7 +75,6 @@ public class TestRaceProcessing
             List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
             List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
             DriverInfo driverInfo = driversInfo.get(0);
-            SimpleDateFormat lapTimeDateFormat = new SimpleDateFormat("mm:ss.SSS");
             Date raceTime = new Timestamp(lapTimeDateFormat.parse("04:11.578").getTime());
             Date totalRaceTime = new Timestamp(driverInfo.getTotalRaceTime().getTime());
             Assert.assertTrue(driverInfo.getTotalRaceTime().getTime() == raceTime.getTime());
@@ -94,7 +94,6 @@ public class TestRaceProcessing
             List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
             List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
             DriverInfo driverInfo = driversInfo.get(0);
-            SimpleDateFormat lapTimeDateFormat = new SimpleDateFormat("mm:ss.SSS");
             Date lapTime = new Timestamp(lapTimeDateFormat.parse("01:02.769").getTime());
             Assert.assertTrue(driverInfo.getBestLap().getTime() == lapTime.getTime());
         }
@@ -105,7 +104,7 @@ public class TestRaceProcessing
         }
     }
 
-    /**
+
     @Test
     public void CHECK_RACE_BEST_LAP()
     {
@@ -113,9 +112,15 @@ public class TestRaceProcessing
         {
             List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
             List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
-            DriverInfo driverInfo = driversInfo.get(0);
-            Date lapTime = new Date();
-            Assert.assertTrue(driverInfo.getBestLap() == lapTime);
+            Date lapTime = new Timestamp(lapTimeDateFormat.parse("01:02.769").getTime());
+
+            for(DriverInfo driverInfo : driversInfo)
+            {
+                if(driverInfo.isRaceBestLap())
+                {
+                    Assert.assertTrue(driverInfo.getBestLap().getTime() == lapTime.getTime());
+                }
+            }
         }
         catch(Exception e)
         {
@@ -123,7 +128,6 @@ public class TestRaceProcessing
             Assert.assertTrue(false);
         }
     }
-    **/
 
     @Test
     public void CHECK_GAP_TO_LEADER()
@@ -133,11 +137,7 @@ public class TestRaceProcessing
             List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
             List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
             DriverInfo driverInfo = driversInfo.get(1);
-            System.out.println("Info Gap to leader: " + driverInfo.getGapToLeader());
-            SimpleDateFormat lapTimeDateFormat = new SimpleDateFormat("mm:ss.SSS");
             Date gapToLeader = new Timestamp(lapTimeDateFormat.parse("00:05.117").getTime());
-            System.out.println("Gap to leader: " + gapToLeader);
-            System.out.println("Info Gap to leader: " + driverInfo.getGapToLeader());
             Assert.assertTrue(driverInfo.getGapToLeader().getTime() == gapToLeader.getTime());
         }
         catch(Exception e)
