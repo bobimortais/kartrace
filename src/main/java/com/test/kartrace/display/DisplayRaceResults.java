@@ -36,7 +36,7 @@ public class DisplayRaceResults
                     driver.getDriverName(),
                     driver.getCompletedLaps(),
                     driver.isRaceBestLap() ? dateFormat.format(driver.getBestLap()) + "*" : dateFormat.format(driver.getBestLap()),
-                    String.format("%.3f", driver.getAvgSpeed() / driver.getCompletedLaps()),
+                    String.format("%.3f", driver.getTotalSpeed() / driver.getCompletedLaps()),
                     dateFormat.format(driver.getGapToLeader()),
                     dateFormat.format(driver.getTotalRaceTime()));
         }

@@ -21,7 +21,7 @@ public class DriverInfo
 
     private boolean raceBestLap;
 
-    private double avgSpeed;
+    private double totalSpeed;
 
     private Date gapToLeader;
 
@@ -95,14 +95,14 @@ public class DriverInfo
         this.raceBestLap = raceBestLap;
     }
 
-    public double getAvgSpeed()
+    public double getTotalSpeed()
     {
-        return avgSpeed;
+        return totalSpeed;
     }
 
-    public void setAvgSpeed(double avgSpeed)
+    public void setTotalSpeed(double totalSpeed)
     {
-        this.avgSpeed = avgSpeed;
+        this.totalSpeed = totalSpeed;
     }
 
     public Date getGapToLeader()
@@ -112,12 +112,13 @@ public class DriverInfo
 
     public void setGapToLeader(Date gapToLeader)
     {
-        this.gapToLeader = gapToLeader;
+        this.gapToLeader = new Date(this.gapToLeader.getTime() + gapToLeader.getTime());
     }
 
     public void addRaceTime(Date timeToAdd)
     {
-        totalRaceTime = new Date(totalRaceTime.getTime() + timeToAdd.getTime());
+        totalRaceTime = new Date(totalRaceTime.getTime() + (timeToAdd.getTime() - 10800000));
+        System.out.println("");
     }
 
     public void incrementCompletedLaps()
@@ -129,7 +130,8 @@ public class DriverInfo
     {
         this.driverId = driverId;
         this.driverName = driverName;
-        totalRaceTime = new Date(0);
-        bestLap = new Date(Long.MAX_VALUE);
+        this.totalRaceTime = new Date(10800000);
+        this.gapToLeader = new Date(10800000);
+        this.bestLap = new Date(Long.MAX_VALUE);
     }
 }

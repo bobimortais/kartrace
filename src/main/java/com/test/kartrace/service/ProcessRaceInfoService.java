@@ -97,8 +97,8 @@ public class ProcessRaceInfoService
                 if(lap.getLapTime().getTime() < driverInfo.getBestLap().getTime())
                     driverInfo.setBestLap(lap.getLapTime());
 
-                driverInfo.setAvgSpeed((driverInfo.getAvgSpeed() + lap.getAvgLapSpeed()));
-                driverInfo.setTotalRaceTime(lap.getLapTime());
+                driverInfo.setTotalSpeed((driverInfo.getTotalSpeed() + lap.getAvgLapSpeed()));
+                driverInfo.addRaceTime(lap.getLapTime());
                 //Laps could have the same lap time
                 if(lap.getLapTime().getTime() == bestLap.getLapTime().getTime())
                     driverInfo.setRaceBestLap(true);
