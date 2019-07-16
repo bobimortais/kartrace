@@ -3,7 +3,6 @@ import com.test.kartrace.service.ProcessRaceInfoService;
 import com.test.kartrace.util.FileProcessor;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;

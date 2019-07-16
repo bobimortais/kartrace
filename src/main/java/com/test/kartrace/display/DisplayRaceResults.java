@@ -50,7 +50,7 @@ public class DisplayRaceResults
      * @param completedLaps
      * @return String - average speed
      */
-    public static String formatAvgSpeed(double totalSpeed, int completedLaps)
+    private static String formatAvgSpeed(double totalSpeed, int completedLaps)
     {
         return String.format("%.3f", totalSpeed / completedLaps);
     }
