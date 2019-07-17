@@ -14,7 +14,7 @@ Pré-requisitos
   - Na linha de comando, execute **mvn clean package** para a realização do build
   - Após a conclusão do build, vá para a pasta **target** do projeto
   - Na linha de comando, execute **java -jar kartrace-1.0-SNAPSHOT-jar-with-dependencies.jar "Caminho completo do arquivo de log"**
-  - Após a execução do comando acima, o resultado da corrida deverá ser exibido no terminal com as seguintes informações
+  - Após a execução do comando acima, o resultado da corrida deverá ser exibido no terminal com as seguintes informações:
     - Posição
     - Código do piloto
     - Nome do piloto
