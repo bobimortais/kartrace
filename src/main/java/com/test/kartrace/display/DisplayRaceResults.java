@@ -11,11 +11,15 @@ public class DisplayRaceResults
 
     }
 
-    public static final String SEPARATOR = "+---------+--------+----------------+--------+--------------+------------------+------------------+-------------+%n";
+    public static final String SEPARATOR        = "+---------+--------+----------------+--------+--------------+------------------+------------------+-------------+%n";
 
     public static final String FIELDS_ALIGNMENT = "| %-7s | %-6s | %-14s | %-6s | %-12s | %-16s | %-16s | %-11s |%n";
 
-    public static final String FIELDS = "| Posicao | Codigo | Piloto         | Voltas | Melhor Volta | Velocidade Media | Tempo para lider | Tempo Total |%n";
+    public static final String FIELDS           = "| Posicao | Codigo | Piloto         | Voltas | Melhor Volta | Velocidade Media | Tempo para lider | Tempo Total |%n";
+
+    public static final String BEST_LAP         = "*Melhor volta da corrida";
+
+    public static final String SPEED_FORMAT     = "%.3f";
     /**
      * Method to show the race results
      * @param driversResults - List with the results for each driver
@@ -41,7 +45,7 @@ public class DisplayRaceResults
                     dateFormat.format(driver.getTotalRaceTime()));
         }
         System.out.format(SEPARATOR);
-        System.out.println("*Melhor volta da corrida");
+        System.out.println(BEST_LAP);
     }
 
     /**
@@ -52,6 +56,6 @@ public class DisplayRaceResults
      */
     private static String formatAvgSpeed(double totalSpeed, int completedLaps)
     {
-        return String.format("%.3f", totalSpeed / completedLaps);
+        return String.format(SPEED_FORMAT, totalSpeed / completedLaps);
     }
 }

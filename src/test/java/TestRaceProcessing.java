@@ -3,6 +3,8 @@ import com.test.kartrace.service.ProcessRaceInfoService;
 import com.test.kartrace.util.FileProcessor;
 import org.junit.Assert;
 import org.junit.Test;
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,22 +16,37 @@ public class TestRaceProcessing
     @Test
     public void TEST_FILE_LOAD_SUCESS()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
-        Assert.assertTrue(fileLines.size() > 0);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_1.txt");
+            Assert.assertTrue(fileLines.size() > 0);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
     }
 
     @Test
     public void TEST_DIFFERENT_FILE_LOAD_SUCESS()
     {
-        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_2.txt");
-        Assert.assertTrue(fileLines.size() > 0);
+        try
+        {
+            List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_2.txt");
+            Assert.assertTrue(fileLines.size() > 0);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
     }
 
-    @Test
-    public void TEST_FILE_LOAD_FAIL()
+    @Test(expected = NoSuchFileException.class)
+    public void TEST_FILE_LOAD_FAIL() throws IOException
     {
         List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_3.txt");
-        Assert.assertTrue(fileLines.size() == 0);
     }
 
     @Test

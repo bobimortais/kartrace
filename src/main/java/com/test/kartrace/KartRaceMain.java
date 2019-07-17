@@ -5,7 +5,7 @@ import com.test.kartrace.entity.DriverInfo;
 import com.test.kartrace.service.ProcessRaceInfoService;
 import com.test.kartrace.util.FileProcessor;
 import org.apache.log4j.Logger;
-
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 
 public class KartRaceMain
@@ -24,9 +24,13 @@ public class KartRaceMain
             List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
             DisplayRaceResults.showRaceResults(driversInfo);
         }
+        catch(NoSuchFileException e)
+        {
+            logger.error("The file to be processed was not found", e);
+        }
         catch(Exception e)
         {
-            logger.error("", e);
+            logger.error("An error occurred when processing the request", e);
         }
     }
 }
