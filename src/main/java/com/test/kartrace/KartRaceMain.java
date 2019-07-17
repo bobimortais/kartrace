@@ -6,6 +6,7 @@ import com.test.kartrace.service.ProcessRaceInfoService;
 import com.test.kartrace.util.FileProcessor;
 import org.apache.log4j.Logger;
 import java.nio.file.NoSuchFileException;
+import java.text.ParseException;
 import java.util.List;
 
 public class KartRaceMain
@@ -27,6 +28,10 @@ public class KartRaceMain
         catch(NoSuchFileException e)
         {
             logger.error("The file to be processed was not found", e);
+        }
+        catch(ParseException e)
+        {
+            logger.error("Error proccessing data from input file", e);
         }
         catch(Exception e)
         {

@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,13 @@ public class TestRaceProcessing
     public void TEST_FILE_LOAD_FAIL() throws IOException
     {
         List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_3.txt");
+    }
+
+    @Test(expected = ParseException.class)
+    public void TEST_INVALID_VALUE_ON_FILE() throws Exception
+    {
+        List<String> fileLines = FileProcessor.getLinesFromFile("src/test/resources/kartlog_4.txt");
+        List<DriverInfo> driversInfo = ProcessRaceInfoService.processRaceResults(fileLines);
     }
 
     @Test

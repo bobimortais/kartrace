@@ -2,9 +2,9 @@ package com.test.kartrace.service;
 
 import com.test.kartrace.entity.DriverInfo;
 import com.test.kartrace.entity.LapInfo;
-import org.apache.log4j.Logger;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -18,9 +18,7 @@ public class ProcessRaceInfoService
 
     }
 
-    private static final Logger logger = Logger.getLogger(ProcessRaceInfoService.class);
-
-    public static List<DriverInfo> processRaceResults(List<String> fileLines) throws Exception
+    public static List<DriverInfo> processRaceResults(List<String> fileLines) throws ParseException
     {
         List<LapInfo> lapInfoList = convertLinesToLapInfo(fileLines);
         getDriversResults(lapInfoList);
@@ -33,7 +31,7 @@ public class ProcessRaceInfoService
      * @return List<LapInfo>
      * @throws Exception
      */
-    private static List<LapInfo> convertLinesToLapInfo(List<String> fileLines) throws Exception
+    private static List<LapInfo> convertLinesToLapInfo(List<String> fileLines) throws ParseException
     {
         List<LapInfo> lapInfoList = new ArrayList<>();
         SimpleDateFormat lapTimeDateFormat = new SimpleDateFormat("mm:ss.SSS");

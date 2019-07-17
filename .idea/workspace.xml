@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2942b775-49e6-49b7-b4bc-d3f111a4c7a5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/test/kartrace/KartRaceMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/test/kartrace/KartRaceMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/test/kartrace/display/DisplayRaceResults.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/test/kartrace/display/DisplayRaceResults.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/test/kartrace/util/FileProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/test/kartrace/util/FileProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/test/kartrace/service/ProcessRaceInfoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/test/kartrace/service/ProcessRaceInfoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TestRaceProcessing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestRaceProcessing.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -42,11 +40,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/test/kartrace/entity/DriverInfo.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/test/java/TestRaceProcessing.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/test/kartrace/display/DisplayRaceResults.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/test/kartrace/service/ProcessRaceInfoService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/test/kartrace/KartRaceMain.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/test/kartrace/util/FileProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/test/kartrace/KartRaceMain.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/test/kartrace/service/ProcessRaceInfoService.java" />
+        <option value="$PROJECT_DIR$/src/test/java/TestRaceProcessing.java" />
+        <option value="$PROJECT_DIR$/src/test/resources/kartlog_4.txt" />
       </list>
     </option>
   </component>
@@ -167,13 +166,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\robsonz\git\kartrace\src\main\resources" />
       <recent name="C:\Users\robsonz\git\kartrace\src\test\resources" />
+      <recent name="C:\Users\robsonz\git\kartrace\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -231,9 +230,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestRaceProcessing - 2019.07.16 at 16h 02m 21s.xml">
-      <configuration name="TestRaceProcessing" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="TestRaceProcessing - 2019.07.16 at 16h 05m 45s.xml">
       <configuration name="TestRaceProcessing" configurationId="JUnit" />
     </history-entry>
@@ -261,12 +257,15 @@
     <history-entry file="TestRaceProcessing - 2019.07.16 at 23h 46m 38s.xml">
       <configuration name="TestRaceProcessing" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="TestRaceProcessing - 2019.07.17 at 00h 06m 07s.xml">
+      <configuration name="TestRaceProcessing" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.44878048" visible="true" weight="0.25189108" />
-      <window_info id="Structure" order="1" sideWeight="0.5512195" side_tool="true" visible="true" weight="0.25189108" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.45008183" visible="true" weight="0.25189108" />
+      <window_info id="Structure" order="1" sideWeight="0.5499182" side_tool="true" visible="true" weight="0.25189108" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -274,7 +273,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -370,16 +369,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/TestRaceProcessing.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/test/kartrace/display/DisplayRaceResults.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -412,16 +401,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/test/kartrace/service/ProcessRaceInfoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="31" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/test/kartrace/util/FileProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -434,8 +413,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/test/kartrace/KartRaceMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+        <state relative-caret-position="172">
+          <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/test/kartrace/service/ProcessRaceInfoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/kartlog_4.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/TestRaceProcessing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="38" column="9" lean-forward="true" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
