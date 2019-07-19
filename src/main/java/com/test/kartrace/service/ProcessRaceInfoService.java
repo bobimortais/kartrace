@@ -80,7 +80,7 @@ public class ProcessRaceInfoService
             mapLapsByDriver.get(lap.getDriverId()).add(lap);
         }
 
-        int position = 0;
+        int position = 1;
         for(Iterator it = mapLapsByDriver.keySet().iterator(); it.hasNext();)
         {
             Long driverId = (Long) it.next();
